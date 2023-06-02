@@ -1,0 +1,162 @@
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+.container {
+    background-color: rgb(250, 248, 246);
+    padding-bottom: 40px;
+}
+
+.invoice-container {
+    padding-top: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.address p {
+    padding: 0;
+    margin: 2px;
+}
+
+.address .border-buttom {
+    border-bottom: 1px solid silver;
+    margin-top: 10px;
+    width: 80px;
+}
+
+.content-right p {
+    margin: 2px;
+}
+
+.content-right .border-buttom {
+    border-bottom: 1px solid silver;
+    margin-top: 10px;
+    width: 80px;
+}
+
+.details-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.content-left .content-left-buttom {
+    margin: 95px 0px 70px 0px;
+}
+
+.content-left-buttom p {
+    margin-bottom: 2px;
+}
+.content-left-buttom p:first-child {
+   text-transform: uppercase;
+}
+.content-right .content-right-buttom {
+    margin: 50px 0px 20px 0px;
+}
+.content-right-buttom p:first-child{
+    text-transform: uppercase;
+}
+.amount {
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+.amount p {
+    margin-bottom: 10px;
+}
+
+.amt-description {
+    display: flex;
+    justify-content: space-between;
+    border-top: 2px solid silver;
+    border-bottom: 2px solid silver;
+}
+
+.description {
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+.description p {
+    margin-bottom: 10px;
+}
+
+.monthly-price-container {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+}
+
+.plans-description p {
+    margin-bottom: 2px;
+}
+
+.additional-storage-price {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+    border-bottom: 2px solid silver;
+}
+
+.additional-storage p {
+    margin-bottom: 2px;
+}
+
+.additional-storage p:last-child {
+    margin-bottom: 25px;
+}
+
+.total-price {
+    display: flex;
+    justify-content: end;
+    text-indent: 2rem;
+    margin-top: 10px;
+}
+ .border-buttom-price {
+    border-bottom: 2px solid silver;
+    width: 120px;
+    float: right;
+}
+
+.amount-price {
+    display: flex;
+    justify-content: end;
+    text-indent: 2rem;
+    margin-top: 20px;
+}
+
+@media screen and (max-width:767px) {
+    .modal-dialog{
+        width: 50%;
+    }
+    .container{
+        width: 100%;
+    }
+    .invoice-container{
+        font-size: 11px;
+    
+    }
+.amt-description{
+    font-size: 13px;
+}
+.monthly-price-container{
+    font-size: 11px;
+}
+.additional-storage-price{
+    font-size: 11px;
+}
+.total-price{
+    font-size: 13px;
+}
+.amount-price{
+    font-size: 12px;
+}
+}
+
+@media print {
+    #close_button{
+        display: none;
+    }
+    #print_Button{
+        display: none; 
+    }
+ }

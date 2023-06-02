@@ -1,0 +1,558 @@
+body {
+    background-color: aliceblue;
+    overflow-x: hidden;
+
+}
+
+.container {
+    background-color: #fff;
+    display: flex;
+    box-shadow: 1px 2px 4px 4px #888888;
+    margin-bottom: 20px;
+
+}
+
+header {
+    background-color: white;
+    height: 50px;
+    padding-top: 3px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.header-part {
+    display: flex;
+    flex-direction: row;
+    text-indent: 2rem;
+    list-style: none;
+    justify-content: flex-end;
+    padding-right: 20px;
+    font-size: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 10px;
+}
+li{
+    font-weight: bold;   
+
+}
+li:hover{
+    color: rgb(218, 60, 204);
+}
+.bell-icon {
+   
+    font-size: 20px;
+    align-items: center;
+}
+.bell-icon:hover{
+    color: rgb(218, 60, 204);
+}
+.pricing-head {
+    text-align: center;
+    color: white;
+    font-weight: 400;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}
+
+h3 {
+    text-align: center;
+}
+
+.order {
+    padding: 40px 10px 20px 0px;
+}
+
+.order-summary {
+    width: 60%;
+    padding: 50px;
+    border-right: 2px solid silver;
+
+}
+
+.zero {
+    background-color: rgb(174, 40, 179);
+    padding: 1px 6px 1px 6px;
+    border-radius: 40px;
+    color: #fff;
+}
+
+.workspace {
+    font-weight: bold;
+    padding: 20px;
+}
+
+.workspace-container {
+    padding: 10px 0px 15px 0px;
+    border-bottom: 1px solid rgb(200, 207, 216);
+
+}
+
+label {
+    font-weight: 600;
+}
+
+.billing-plan {
+    display: flex;
+    justify-content: center;
+    padding: 0px 30px 30px 0px;
+    position: relative;
+}
+
+.bill-yearly {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid silver;
+    padding: 20px;
+}
+
+.bill-monthly {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid silver;
+    padding: 20px;
+}
+
+.doller {
+    font-size: 20px;
+}
+
+.bill-yearly:hover,
+.bill-monthly:hover {
+    border: 3px solid rgb(66, 135, 245);
+}
+
+
+.rad-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    z-index: -1;
+    background-color: rgb(174, 202, 228);
+}
+
+.rad-label {
+    padding: 5px;
+}
+
+.rad-design {
+    width: 22px;
+    height: 22px;
+    border-radius: 100px;
+    background: rgb(66, 135, 245);
+    position: relative;
+}
+
+.rad-design::before {
+    content: '';
+    display: inline-block;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+
+    background: hsl(0, 0%, 90%);
+    transform: scale(1.1);
+    transition: .3s;
+}
+
+.rad-input:checked+.rad-design::before {
+    transform: scale(0);
+}
+
+.bill {
+    padding-top: 20px;
+}
+
+.code {
+
+    color: rgb(35, 139, 35);
+    border-bottom: 2px dashed rgb(35, 139, 35);
+}
+
+.code-content {
+    display: flex;
+    justify-content: center;
+}
+
+.seat {
+    display: flex;
+    flex-direction: start;
+    justify-content: space-between;
+    border-top: 2px dashed silver;
+
+}
+
+.today {
+    background: linear-gradient(rgb(216, 219, 230), rgb(206, 211, 226));
+    border: 2px solid silver;
+}
+
+.bill-today {
+    display: flex;
+    flex-direction: start;
+    justify-content: space-between;
+    border-bottom: 2px dashed silver;
+}
+
+
+.payment-details {
+    padding: 0px 0px 20px 0px;
+    border-top: 2px solid silver;
+}
+
+.card-details {
+    display: flex;
+    flex-direction: start;
+    padding-top: 9px;
+    justify-content: space-between;
+
+}
+
+input {
+    border: 2px solid #dfdcdc;
+    background-color: #fff;
+    display: inline-block;
+    color: inherit;
+    transition: border-color .15s ease-in-out 0s, box-shadow .15s ease-in-out 0s;
+    padding: 0.5rem 0;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+    background-clip: padding-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.375rem;
+    padding-left: 10px;
+}
+
+input:focus {
+    outline: none;
+}
+
+.make-payment {
+    padding: 10px 30px 10px 30px;
+    width: 100%;
+    margin: 20px 0px 10px 0px;
+    border: none;
+    background-color: rgb(155, 155, 219);
+    color: #fff;
+    font-weight: bold;
+    border-radius: 3px;
+}
+
+.per-off {
+    background-color: rgb(83, 194, 83);
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    position: absolute;
+    margin-left: 165px;
+    top: -9px;
+    padding-left: 10px;
+    padding-top: 15px;
+    color: white;
+}
+
+.yearly-plan {
+    padding-bottom: 40px;
+}
+
+.payment-head {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+}
+
+.days-off {
+    width: 74px;
+    height: 100px;
+    border-right: 2px solid rgb(95, 206, 95);
+    border-left: 2px solid rgb(73, 179, 73);
+
+    text-align: center;
+    position: relative;
+    color: rgb(79, 207, 79);
+
+}
+
+#tri-up {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 1px solid green;
+    transform: translate(-50%, -50%) rotate(45deg);
+    border-right: none;
+    border-bottom: none;
+    margin-top: -1px;
+    margin-left: 37px;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 30px 10px 30px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.lists {
+    padding: 7px;
+}
+
+.ic {
+    color: green;
+}
+
+.trusted {
+    padding: 40px 0px 50px 34px;
+    font-size: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-between;
+    width: 40px;
+    height: 40px;
+}
+
+.cards img {
+    margin: 10px;
+
+}
+
+.cards-container {
+    padding: 40px 0px 150px 34px;
+    font-size: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.money-back{
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    width: 70px;
+}
+@media screen and (max-width:767px) {
+    .cards {
+        display: flex;
+        width: 10px;
+        height: 10px;
+    }
+    .container {
+    background-color: #fff;
+    display: flex;
+    box-shadow: 1px 2px 4px 4px #888888;
+     
+    }
+    .cards img {
+        margin: 1px;
+
+    }
+
+    .trusted {
+        padding: 40px 0px 150px 34px;
+        font-size: 15px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    .description {
+        display: flex;
+        flex-direction: column;
+        padding: 7px 10px 7px 10px;
+        font-size: 10px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    .order {
+        font-size: 20px;
+        padding: 0px;
+    }
+
+    .upgrade {
+        font-size: 13px;
+    }
+
+    .workspace {
+        font-weight: bold;
+        padding: 10px;
+        font-size: 10px;
+    }
+
+    .billing-plan {
+        display: flex;
+        justify-content:center;
+        padding: 0px 30px 30px 0px;
+        position: relative;
+    }
+
+    .bill-yearly {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 3px solid silver;
+        padding: 9px;
+        font-size: 10px;
+        margin: 10px;
+        margin-left: 0px;
+    }
+
+    .bill-monthly {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 3px solid silver;
+        padding: 9px;
+        font-size: 10px;
+        margin: 10px;
+    }
+
+    .order-summary {
+        width: 60%;
+        padding: 20px;
+        border-right: 2px solid silver;
+
+    }
+
+    .per-off {
+        background-color: rgb(83, 194, 83);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        position: absolute;
+        margin-left: 94px;
+        top: -9px;
+        padding-left: 7px;
+        padding-top: 7px;
+        color: white;
+        font-size: 10px;
+    }
+
+    .code {
+
+        color: rgb(35, 139, 35);
+        border-bottom: 2px dashed rgb(35, 139, 35);
+        font-size: 12px;
+        margin-bottom: 9px;
+    }
+
+    .code-content {
+        display: flex;
+        justify-content: center;
+    }
+
+    .yearly {
+        font-size: 1em;
+    }
+
+    .seat {
+        font-size: 13px;
+    }
+
+    .today {
+        font-size: 10px;
+    }
+
+    .days-off {
+        width: 60px;
+        height: 60px;
+        border-right: 2px solid rgb(95, 206, 95);
+        border-left: 2px solid rgb(73, 179, 73);
+        font-size: 8px;
+        text-align: center;
+        position: relative;
+        color: rgb(79, 207, 79);
+        margin: 0px;
+        margin-left: 30PX;
+
+    }
+
+    #tri-up {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        border: 1px solid green;
+        transform: translate(-50%, -50%) rotate(45deg);
+        border-right: none;
+        border-bottom: none;
+        margin-top: -1px;
+        margin-left: 60px;
+    }
+
+    .days {
+        font-size: 16px;
+        margin: 0px;
+    }
+     .money-back{
+        font-size: 7px;
+        margin-left: 20px;
+        
+     }
+    .payment {
+        padding: 45px 5px 10px 0px;
+        font-size: 18px;
+    }
+
+    .trusted {
+        padding: 5px 0px 25px 20px;
+        font-size: 12px;
+        font-family: Verdana, Geneva, Taoma, sans-serif;
+    }
+
+    .cards-container {
+        padding: 20px 0px 30px 20px;
+        font-size: 14px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    button {
+        padding: 5px;
+        width: 100%;
+        margin: 20px 0px 10px 0px;
+        border: none;
+        background-color: rgb(155, 155, 219);
+        color: #fff;
+        font-weight: bold;
+        font-size: 12px;
+        border-radius: 3px;
+    }
+}
+
+.footer {
+    padding: 20px 0;
+    font-size: 14px;
+    transition: all 0.3s;
+    border-top: 1px solid #cddfff;
+    background-color: white;
+    font-weight: 500;
+    font-family: "Open Sans", sans-serif;
+}
+
+.footer .copyright {
+    text-align: center;
+    color: #012970;
+}
+
+.container {
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+.submit-btn{
+    margin-left: 47%;
+    margin-bottom: 90px;
+}
+.profile-deatils-container{
+    margin: 10px;
+}
+
+.edit-profile{
+    color: #0a0724;
+    font-weight: bold;
+
+}
