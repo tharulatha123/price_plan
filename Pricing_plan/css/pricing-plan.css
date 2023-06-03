@@ -10,11 +10,14 @@
     /* editing area */
     min-height: 200px;
 }
-.addfeatures{
+.add-features-enable{
     margin-left: 120px;
     margin-bottom: 10px;
 }
-
+.add-features-disables{
+    margin-left: 130px;
+    margin-bottom: 10px;
+}
 .enableData{
     width: 50%;
     margin: 7px;
@@ -22,4 +25,14 @@
 .diableData{
     width: 50%;
     margin: 7px;
+}
+@media screen and (max-width:767px) {
+    .add-features-disables{
+        margin-left: 0px;
+        margin-bottom: 10px;
+    }
+    .add-features-enable{
+        margin-left: 0px;
+        margin-bottom: 10px;
+    }
 }

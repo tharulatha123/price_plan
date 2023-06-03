@@ -3,79 +3,6 @@
 include('./api/database/config.php');
 
 
-// if (isset($_POST['submit'])) {
-//     $month_year = $_POST['month_year'];
-//     $plan_type = $_POST['plan_type'];
-//     $price = $_POST['price'];
-//     $discount = $_POST['discount'];
-//     $total_amt = $_POST['total_amt'];
-
-
-//     $sql = "INSERT INTO `price_plan` (month_year,plan_type,price,discount,total_amt) 
-//     VALUES('$month_year', '$plan_type','$price','$discount','$total_amt')";
-
-//     $result = mysqli_query($con, $sql);
-
-//     if ($result) {
-//         // echo "Data inserted";
-//         header('location:pricing_data.php');
-//     } else {
-//         die(mysqli_error($con));
-//     }
-// }
-
-// $sql_fetch = "SELECT * FROM `price_plan`";
-// $result_data = mysqli_query($con, $sql_fetch);
-// while ($row = mysqli_fetch_assoc($result_data)) {
-//     $id = $row['id'];
-// }
-
-// if (isset($_POST['submit'])) {
-//     $enable_features = $_POST['enable_features'];
-
-//     foreach ($arrayElements as $enable_features) {
-//         $sql_query = "INSERT INTO `enabled` (enable_features,price_id) VALUES ('$enable_features',$id)";
-//         $obj = mysqli_query($con, $sql_query);
-
-//         if ($obj) {
-//             header('location:pricing_data.php');
-//         } else {
-//             die(mysqli_error($con));
-//         }
-//     }
-// }
-
-//  if(isset($_POST['submit'])){
-//     foreach ($arrayElements as $element) {
-//         $sql_query = "INSERT INTO `enabled` (enable_features,price_id) VALUES ('$enable_features',$id)";
-//         $obj = mysqli_query($con,$sql_query);
-
-//             if($obj){
-//                 header('location:pricing_data.php');
-//             } else {
-//                 die(mysqli_error($con));
-//             }
-//       }
-//  }
-
-
-
-// $stmt = $con->prepare("INSERT INTO `price_plan` (month_year,plan_type,price,discount,total_amt) 
-// VALUES(?,?,?,?,?)");
-
-//  // Insert into the main table
-//  $stmt->bind_param("sssss", $month_year,$plan_type,$price,$discount,$total_amt);
-
-//  if ($stmt) {
-//     // echo "Data inserted";
-//     header('location:pricing_data.php');
-// } else {
-//     die(mysqli_error($con));
-// }
-
-//  // Get the auto-generated ID from the main table
-//  $mainId = $stmt->insert_id;
-
 if (isset($_POST['submit'])) {
     $month_year = $_POST['month_year'];
     $plan_type = $_POST['plan_type'];
@@ -92,34 +19,39 @@ if (isset($_POST['submit'])) {
     if ($result) {
         // echo "Data inserted";
         header('location:pricing_data.php');
-    } 
-}
+    }
+
+
+
 
 $sql_fetch = "SELECT * FROM `price_plan`";
 $result_data = mysqli_query($con, $sql_fetch);
 while ($row = mysqli_fetch_assoc($result_data)) {
     $id = $row['id'];
 }
-
+//inserting enable data
 $stmt_related = $con->prepare("INSERT INTO `enabled` (enable_features,price_id) VALUES  (?, ?)");
 $dataArray = $_POST['enable_features'];
+print_r($dataArray);
 foreach ($dataArray as $enable_features) {
-
-
     $stmt_related->bind_param("si", $enable_features, $id);
     $stmt_related->execute();
+  
 }
 
+
+//imserting diable data
 $diable_related = $con->prepare("INSERT INTO `diabled` (disable_features,price_id) VALUES  (?, ?)");
 $arrayData = $_POST['disable_features'];
 foreach ($arrayData as $disable_features) {
-
-
+    
+   if(!empty($diable_related)){
     $diable_related->bind_param("si", $disable_features, $id);
     $diable_related->execute();
+   }
 }
 
-
+}
 
 
 
@@ -168,7 +100,7 @@ foreach ($arrayData as $disable_features) {
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="dashborad.php" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
                 <span class="d-none d-lg-block">NiceAdmin</span>
             </a>
@@ -454,7 +386,7 @@ foreach ($arrayData as $disable_features) {
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="dashborad.php">Home</a></li>
-                    <li class="breadcrumb-item"><a href="pricing_plan.php">Pricing Plan</a></li>
+                    <li class="breadcrumb-item"><a href="pricing_data.php">Pricing plan</a></li>
                     <li class="breadcrumb-item active">Add Pricing</li>
                 </ol>
             </nav>
@@ -507,20 +439,20 @@ foreach ($arrayData as $disable_features) {
 
                                 <div class="row my-3" id="row1">
                                     <div class="col-md-12" id="inputbox1">
-                                        <label for="enable" class="form-label">Enabled Features</label> <button type="button" class="btn btn-success addfeatures" onclick="enableInput()"><i class="ri-add-box-line"></i></button>
-                                        <input type="text" name="enable_features[]"  class="form-control space-btwn enableData" id="enable">
+                                        <label for="enable" class="form-label">Enabled Features</label> <button type="button" class="btn btn-success add-features-enable" onclick="enableInput()"><i class="ri-add-box-line"></i></button>
+                                        <input type="text" name="enable_features[]" class="form-control space-btwn enableData" id="enable">
                                     </div>
                                 </div>
                                 <div class="row my-3" id="row2">
-                                <div class="col-md-12" id="inputbox2">
-                                        <label for="diable" class="form-label">Diable Features</label> <button type="button" class="btn btn-success addfeatures" onclick="diableInput()"><i class="ri-add-box-line"></i></button>
+                                    <div class="col-md-12" id="inputbox2">
+                                        <label for="diable" class="form-label">Disable Features</label> <button type="button" class="btn btn-success add-features-disables" onclick="diableInput()"><i class="ri-add-box-line"></i></button>
                                         <input type="text" name="disable_features[]" class="form-control space-btwn diableData" id="diable">
                                     </div>
                                 </div>
 
 
                                 <div class="text-center my-5">
-                                    <button type="submit" name="submit" onclick="addArray(e)" class="btn btn-primary">Submit</button>
+                                    <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                                     <button type="cancle" class="btn btn-secondary">Cancle</button>
                                 </div>
 

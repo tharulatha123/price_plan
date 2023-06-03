@@ -2,49 +2,6 @@
 
 include('./api/database/config.php');
 
-
-$id = $_GET['editid'];
-
-$sql_query = "SELECT * FROM `price_plan` WHERE id=$id";
-
-$result= mysqli_query($con,$sql_query);
-
-if($result){
-    while ($row = mysqli_fetch_assoc($result)) {
-        $id = $row['id'];
-        $month_year = $row['month_year'];
-        $plan_type = $row['plan_type'];
-        $price = $row['price'];
-        $discount = $row['discount'];
-        $total_amt = $row['total_amt'];
-        $features = $row['features'];
-    }
-}
-
-if (isset($_POST['submit'])) {
-    $month_year = $_POST['month_year'];
-    $plan_type = $_POST['plan_type'];
-    $price = $_POST['price'];
-    $discount = $_POST['discount'];
-    $total_amt = $_POST['total_amt'];
-    $features = $_POST['features'];
-
-    $features = htmlspecialchars(strip_tags($features));
-
-    $sql = "UPDATE `price_plan` SET month_year='$month_year', plan_type='$plan_type',price='$price',discount='$discount',total_amt='$total_amt',features='$features'
-    WHERE id=$id ";
-
-    $result = mysqli_query($con, $sql);
-
-    if ($result) {
-        // echo "Data inserted";
-        header('location:pricing_data.php');
-    } else {
-        die(mysqli_error($con));
-    }
-}
-
-
 ?>
 
 <!DOCTYPE html>
@@ -64,9 +21,7 @@ if (isset($_POST['submit'])) {
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -352,8 +307,7 @@ if (isset($_POST['submit'])) {
             <!-- transtaction table end -->
             <li class="nav-item">
                 <a class="nav-link" data-bs-target="#price-nav" data-bs-toggle="collapse" href="#">
-                    <i class="ri-price-tag-2-line"></i><span>Pricing plan</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
+                    <i class="ri-price-tag-2-line"></i><span>Pricing plan</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="price-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
 
@@ -389,10 +343,28 @@ if (isset($_POST['submit'])) {
                         <div class="card-body">
                             <h5 class="card-title">Add Pricing</h5>
                             <form action="" method="post">
-                                <div class="month-year">
-                                    <?php 
-                                    if($month_year == 'month'){
-                                        echo '<input class="form-check-input" type="radio" name="month_year" id="monthly"
+
+                                <?php
+                                $id = $_GET['editid'];
+
+                                $sql = "SELECT * FROM price_plan WHERE id = $id";
+
+                                $result = mysqli_query($con, $sql);
+
+                                if ($result) {
+                                    while ($row = mysqli_fetch_array($result)) {
+                                        $id = $row['id'];
+                                        $month_year = $row['month_year'];
+                                        $plan_type = $row['plan_type'];
+                                        $price = $row['price'];
+                                        $discount = $row['discount'];
+                                        $total_amt = $row['total_amt'];
+
+                                ?>
+                                        <div class="month-year">
+                                            <?php
+                                            if ($month_year == 'month') {
+                                                echo '<input class="form-check-input" type="radio" name="month_year" id="monthly"
                                         value="month" checked>
                                     <label class="form-check-label" for="m_y1">
                                         Monthly
@@ -402,8 +374,8 @@ if (isset($_POST['submit'])) {
                                         value="year" disabled>
                                     <label class="form-check-label" for="m_y2">
                                         Yearly';
-                                    }else if($month_year == 'year'){
-                                        echo '
+                                            } else if ($month_year == 'year') {
+                                                echo '
                                    
                                     <input class="form-check-input" type="radio" name="month_year" id="yearly"
                                         value="year" checked>
@@ -415,60 +387,106 @@ if (isset($_POST['submit'])) {
                                     <label class="form-check-label" for="m_y1">
                                         Monthly
                                     </label>';
-                                    }
-                                    ?>
-                                    </label>
-                                </div>
-                                <div class="input-select">
-                                    <label for="inputState" class="form-label"></label>
-                                    <select id="inputState" name="plan_type" class="form-select">
-                                        <?php 
-                                        if($plan_type == 'basic'){
-                                            echo '<option selected='.$plan_type.'>Basic</option>
+                                            }
+                                            ?>
+                                            </label>
+                                        </div>
+                                        <div class="input-select">
+                                            <label for="inputState" class="form-label"></label>
+                                            <select id="inputState" name="plan_type" class="form-select">
+                                                <?php
+                                                if ($plan_type == 'basic') {
+                                                    echo '<option selected=' . $plan_type . '>Basic</option>
                                             <option value="standard" disabled>Standard</option>
                                             <option value="premium" disabled>Premium</option>
                                             <option value="special" disabled>Special</option>';
-                                        }else if($plan_type == 'standard'){
-                                            echo '<option selected='.$plan_type.'>Standard</option>
+                                                } else if ($plan_type == 'standard') {
+                                                    echo '<option selected=' . $plan_type . '>Standard</option>
                                             <option value="basic" disabled>Basic</option>
                                             <option value="premium" disabled>Premium</option>
                                             <option value="special" disabled>Special</option>';
-                                        }else if($plan_type == 'premium'){
-                                            echo '<option selected='.$plan_type.'>Premium</option>
+                                                } else if ($plan_type == 'premium') {
+                                                    echo '<option selected=' . $plan_type . '>Premium</option>
                                             <option value="basic" disabled>Basic</option>
                                             <option value="standard" disabled>Standard</option>
                                             <option value="special" disabled>Special</option>';
-                                        }else if($plan_type == 'special'){
-                                            echo '<option selected='.$plan_type.'>Special</option>
+                                                } else if ($plan_type == 'special') {
+                                                    echo '<option selected=' . $plan_type . '>Special</option>
                                             <option value="basic" disabled>Basic</option>
                                             <option value="standard" disabled>Standard</option>
                                             <option value="premium" disabled>Premium</option>';
-                                        }
-                                    
-                                         ?>
-                                    </select>
-                                </div>
+                                                }
 
-                                <div class="row">
-                                    <div class="col-md-4 my-5">
-                                        <label for="prices" class="form-label">Price</label>
-                                        <input type="number" name="price" class="form-control"
-                                            onkeyup="calculateTotal()" value="<?php echo $price ?>" id="prices">
-                                    </div>
-                                    <div class="col-md-4 my-5">
-                                        <label for="discounts" class="form-label">Discount%</label>
-                                        <input type="text" name="discount" class="form-control"
-                                            onkeyup="calculateTotal()" value="<?php echo $discount ?>" id="discounts">
-                                    </div>
-                                    <div class="col-md-4 my-5">
-                                        <label for="total" class="form-label">Total Amount</label>
-                                        <input type="text" name="total_amt" value="<?php echo $total_amt ?>" class="form-control" id="total">
+                                                ?>
+                                            </select>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4 my-5">
+                                                <label for="prices" class="form-label">Price</label>
+                                                <input type="number" name="price" class="form-control" onkeyup="calculateTotal()" value="<?php echo $price ?>" id="prices">
+                                            </div>
+                                            <div class="col-md-4 my-5">
+                                                <label for="discounts" class="form-label">Discount%</label>
+                                                <input type="text" name="discount" class="form-control" onkeyup="calculateTotal()" value="<?php echo $discount ?>" id="discounts">
+                                            </div>
+                                            <div class="col-md-4 my-5">
+                                                <label for="total" class="form-label">Total Amount</label>
+                                                <input type="text" name="total_amt" value="<?php echo $total_amt ?>" class="form-control" id="total">
+                                            </div>
+                                        </div>
+                                <?php
+                                    }
+                                }
+
+                                ?>
+                                <div class="row my-3" id="row1">
+                                    <div class="col-md-12" id="inputbox1">
+                                        <label for="enable" class="form-label">Enabled Features</label> <button type="button" class="btn btn-success add-features-enable" onclick="enableInput()"><i class="ri-add-box-line"></i></button>
+                                        <?php
+                                        $id = $_GET['editid'];
+
+                                        $sql = "SELECT * FROM price_plan INNER JOIN enabled ON price_plan.id = enabled.price_id AND id = $id";
+
+                                        $result = mysqli_query($con, $sql);
+
+                                        if (mysqli_num_rows($result) > 0) {
+                                            while ($row = mysqli_fetch_array($result)) {
+
+                                        ?>
+                                                <input type="text" name="enable_features[]" value="<?php echo $row['enable_features'] ?>" class="form-control space-btwn enableData" id="enable">
+
+                                        <?php
+
+                                            }
+                                        }
+
+                                        ?>
                                     </div>
                                 </div>
-                               
-                                <div class="w-100">
-                                    <p>Features</p>
-                                    <textarea name="features"   id="features" cols="100" rows="10"><?php echo $features ?></textarea>
+                                <div class="row my-3" id="row2">
+                                    <div class="col-md-12" id="inputbox2">
+                                        <label for="diable" class="form-label">Disable Features</label> <button type="button" class="btn btn-success add-features-disables" onclick="diableInput()"><i class="ri-add-box-line"></i></button>
+                                        <?php
+                                        $id = $_GET['editid'];
+
+                                        $sql = "SELECT * FROM price_plan INNER JOIN diabled ON price_plan.id = diabled.price_id AND id = $id";
+
+                                        $result = mysqli_query($con, $sql);
+
+                                        if (mysqli_num_rows($result) > 0) {
+                                            while ($row = mysqli_fetch_array($result)) {
+
+                                        ?>
+                                            <input type="text" name="disable_features[]" value="<?php echo $row['disable_features']?>" class="form-control space-btwn diableData" id="diable">
+
+                                        <?php
+
+                                            }
+                                        }
+
+                                        ?>
+                                    </div>
                                 </div>
                                 <div class="text-center my-5">
                                     <button type="submit" name="submit" class="btn btn-primary">Submit</button>
@@ -486,6 +504,7 @@ if (isset($_POST['submit'])) {
             </div>
         </section>
 
+
     </main><!-- End #main -->
 
     <!-- ======= Footer ======= -->
@@ -502,8 +521,7 @@ if (isset($_POST['submit'])) {
         </div>
     </footer><!-- End Footer -->
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
@@ -531,9 +549,8 @@ if (isset($_POST['submit'])) {
     <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/super-build/ckeditor.js"></script>
 
 
-  <!-- CKEDITOR script -->
+    <!-- CKEDITOR script -->
     <script>
-
         CKEDITOR.ClassicEditor.create(document.getElementById("features"), {
             // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
             toolbar: {
@@ -566,15 +583,53 @@ if (isset($_POST['submit'])) {
             },
             // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
             heading: {
-                options: [
-                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-                    { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-                    { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-                    { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
-                    { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
-                    { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
-                    { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' },
-                    { model: 'label', view: 'label', title: 'label', class: 'ck-label' }
+                options: [{
+                        model: 'paragraph',
+                        title: 'Paragraph',
+                        class: 'ck-heading_paragraph'
+                    },
+                    {
+                        model: 'heading1',
+                        view: 'h1',
+                        title: 'Heading 1',
+                        class: 'ck-heading_heading1'
+                    },
+                    {
+                        model: 'heading2',
+                        view: 'h2',
+                        title: 'Heading 2',
+                        class: 'ck-heading_heading2'
+                    },
+                    {
+                        model: 'heading3',
+                        view: 'h3',
+                        title: 'Heading 3',
+                        class: 'ck-heading_heading3'
+                    },
+                    {
+                        model: 'heading4',
+                        view: 'h4',
+                        title: 'Heading 4',
+                        class: 'ck-heading_heading4'
+                    },
+                    {
+                        model: 'heading5',
+                        view: 'h5',
+                        title: 'Heading 5',
+                        class: 'ck-heading_heading5'
+                    },
+                    {
+                        model: 'heading6',
+                        view: 'h6',
+                        title: 'Heading 6',
+                        class: 'ck-heading_heading6'
+                    },
+                    {
+                        model: 'label',
+                        view: 'label',
+                        title: 'label',
+                        class: 'ck-label'
+                    }
                 ]
             },
             // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
@@ -602,14 +657,12 @@ if (isset($_POST['submit'])) {
             // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
             // https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
             htmlSupport: {
-                allow: [
-                    {
-                        name: /.*/,
-                        attributes: true,
-                        classes: true,
-                        styles: true
-                    }
-                ]
+                allow: [{
+                    name: /.*/,
+                    attributes: true,
+                    classes: true,
+                    styles: true
+                }]
             },
             // Be careful with enabling previews
             // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
@@ -632,18 +685,16 @@ if (isset($_POST['submit'])) {
             },
             // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
             mention: {
-                feeds: [
-                    {
-                        marker: '@',
-                        feed: [
-                            '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
-                            '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
-                            '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
-                            '@sugar', '@sweet', '@topping', '@wafer'
-                        ],
-                        minimumCharacters: 1
-                    }
-                ]
+                feeds: [{
+                    marker: '@',
+                    feed: [
+                        '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+                        '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+                        '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+                        '@sugar', '@sweet', '@topping', '@wafer'
+                    ],
+                    minimumCharacters: 1
+                }]
             },
             // The "super-build" contains more premium features that require additional configuration, disable them below.
             // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.

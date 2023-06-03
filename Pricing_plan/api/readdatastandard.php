@@ -14,7 +14,9 @@ header("Content-Type: application/json; charset=UTF-8");
 
  if(mysqli_num_rows($result)>0){
     $output = mysqli_fetch_all($result,MYSQLI_ASSOC);
-    echo json_encode($output);
+    $data = json_encode($output);
+    echo $data;
+
  }else{
     echo json_encode(array('message'=> 'not found.', 'status'=>false));
  }
