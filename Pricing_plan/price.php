@@ -63,8 +63,8 @@
     <div class="card standard">
       <h3 class="head-standard">STANDARD</h3>
       <h1 id="standard-price"></h1>
-      <div class="lists" id="list-standard" >
-      
+      <div class="lists" id="list-standard">
+
       </div>
       <div class="buy-nw">
         <a href="paymentMonthly.html" id="buy_btn2"><button class="buy-button">Buy Now</button></a>
@@ -104,180 +104,179 @@
     let yearly = document.getElementById("yearly");
     let monthly = document.getElementById("monthly");
 
-    
 
-   let fetchMonthly = () =>{
-     //fetch basic price data
-     fetch('http://localhost/Pricing_plan/api/readbasic.php')
-      .then(response => response.json())
-      .then(data => {
-        // console.log(data)
 
-        let enableArray = []
-        for (let i = 0; i < data.length; i++) {
-          enableArray.push(data[i].enable_features)
-          
-        }
-        const enableList = enableArray.filter((ele, index) => {
-          return enableArray.indexOf(ele) === index;
-        });
-        console.log(enableList);
-        
-       enableList.forEach((val)=>{
-        document.getElementById('lists-basics').innerHTML +=` <label class="list-container" id="bandwidth"><i class="fa-solid fa-check item-checked icn"></i>&nbsp;${val}</label>`;
-       }) 
-           
-        let disableArray = []
-        for(let i=0;i<data.length;i++){
-          disableArray.push(data[i].disable_features)
-        }
-        const diableList = disableArray.filter((ele, index) => {
-          return disableArray.indexOf(ele) === index;
-        });
-         console.log(diableList);
-         diableList.forEach((val)=>{
-        document.getElementById('lists-basics').innerHTML +=` <label class="list-container"><i class="fa-solid fa-xmark item-notchecked icn"></i>&nbsp;${val}</label>`;
-       }) 
+    let fetchMonthly = () => {
+      //fetch basic price data
+      fetch('http://localhost/Pricing_plan/api/readbasic.php')
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data)
 
-        basic.innerHTML = '$' + data[data.length - 1].total_amt + '/mon'
-      })
+          let enableArray = []
+          for (let i = 0; i < data.length; i++) {
+            enableArray.push(data[i].enable_features)
+          }
+          const enableList = enableArray.filter((ele, index) => {
+            return enableArray.indexOf(ele) === index;
+          });
+          console.log(enableList);
+
+          enableList.forEach((val) => {
+            document.getElementById('lists-basics').innerHTML += ` <label class="list-container" id="bandwidth"><i class="fa-solid fa-check item-checked icn"></i>&nbsp;${val}</label>`;
+          })
+
+          let disableArray = []
+          for (let i = 0; i < data.length; i++) {
+            disableArray.push(data[i].disable_features)
+          }
+          const diableList = disableArray.filter((ele, index) => {
+            return disableArray.indexOf(ele) === index;
+          });
+          console.log(diableList);
+          diableList.forEach((val) => {
+            document.getElementById('lists-basics').innerHTML += ` <label class="list-container"><i class="fa-solid fa-xmark item-notchecked icn"></i>&nbsp;${val}</label>`;
+          })
+
+          basic.innerHTML = '$' + data[data.length - 1].total_amt + '/mon'
+        })
 
 
       //features of standard
-    fetch('http://localhost/Pricing_plan/api/readdatastandard.php')
-      .then(response => response.json())
-      .then(data => {
-        // console.log(data);
-        let enableArray = []
-        for (let i = 0; i < data.length; i++) {
-          enableArray.push(data[i].enable_features)
-          
-        }
-        const enableList = enableArray.filter((ele, index) => {
-          return enableArray.indexOf(ele) === index;
-        });
-        console.log(enableList);
-        
-       enableList.forEach((val)=>{
-        document.getElementById('list-standard').innerHTML +=` <label class="list-container" id="bandwidth"><i class="fa-solid fa-check item-checked icn"></i>&nbsp;${val}</label>`;
-       }) 
-           
-        let disableArray = []
-        for(let i=0;i<data.length;i++){
-          disableArray.push(data[i].disable_features)
-        }
-        const diableList = disableArray.filter((ele, index) => {
-          return disableArray.indexOf(ele) === index;
-        });
-         console.log(diableList);
-         diableList.forEach((val)=>{
-        document.getElementById('list-standard').innerHTML +=` <label class="list-container"><i class="fa-solid fa-xmark item-notchecked icn"></i>&nbsp;${val}</label>`;
-       }) 
-        standard.innerHTML = '$' + data[data.length - 1].total_amt + '/mon'
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+      fetch('http://localhost/Pricing_plan/api/readdatastandard.php')
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data);
+          let enableArray = []
+          for (let i = 0; i < data.length; i++) {
+            enableArray.push(data[i].enable_features)
 
-    //fetch premium data
-    fetch('http://localhost/Pricing_plan/api/readpremium.php')
-      .then(response => response.json())
-      .then(data => {
-        // console.log(data)
-        let enableArray = []
-        for (let i = 0; i < data.length; i++) {
-          enableArray.push(data[i].enable_features)
-          
-        }
-        const enableList = enableArray.filter((ele, index) => {
-          return enableArray.indexOf(ele) === index;
-        });
-        console.log(enableList);
-        
-       enableList.forEach((val)=>{
-        document.getElementById('list-premium').innerHTML +=` <label class="list-container" id="bandwidth"><i class="fa-solid fa-check item-checked icn"></i>&nbsp;${val}</label>`;
-       }) 
-           
-        let disableArray = []
-        for(let i=0;i<data.length;i++){
-          disableArray.push(data[i].disable_features)
-        }
-        const diableList = disableArray.filter((ele, index) => {
-          return disableArray.indexOf(ele) === index;
-        });
-         console.log(diableList);
-         diableList.forEach((val)=>{
-        document.getElementById('list-premium').innerHTML +=` <label class="list-container"><i class="fa-solid fa-xmark item-notchecked icn"></i>&nbsp;${val}</label>`;
-       }) 
-        premium.innerHTML = '$' + data[data.length - 1].total_amt + '/mon'
+          }
+          const enableList = enableArray.filter((ele, index) => {
+            return enableArray.indexOf(ele) === index;
+          });
+          console.log(enableList);
 
-      })
-    //fetch special data
-    fetch('http://localhost/Pricing_plan/api/readspecial.php')
-      .then(response => response.json())
-      .then(data => {
-        // console.log(data)
-        let enableArray = []
-        for (let i = 0; i < data.length; i++) {
-          enableArray.push(data[i].enable_features)
-          
-        }
-        const enableList = enableArray.filter((ele, index) => {
-          return enableArray.indexOf(ele) === index;
-        });
-        console.log(enableList);
-        
-       enableList.forEach((val)=>{
-        document.getElementById('list-special').innerHTML +=` <label class="list-container" id="bandwidth"><i class="fa-solid fa-check item-checked icn"></i>&nbsp;${val}</label>`;
-       }) 
-           
-        let disableArray = []
-        for(let i=0;i<data.length;i++){
-          disableArray.push(data[i].disable_features)
-        }
-        const diableList = disableArray.filter((ele, index) => {
-          return disableArray.indexOf(ele) === index;
-        });
-         console.log(diableList);
-       
-    
-       if(diableList.length>1){
-        diableList.forEach((val)=>{
-        document.getElementById('list-special').innerHTML +=` <label class="list-container"><i class="fa-solid fa-xmark item-notchecked icn"></i>&nbsp;${val}</label>`;
-       }) 
-       }
-    
-         
-        
-        special.innerHTML = '$' + data[data.length - 1].total_amt + '/mon'
-      })
+          enableList.forEach((val) => {
+            document.getElementById('list-standard').innerHTML += ` <label class="list-container" id="bandwidth"><i class="fa-solid fa-check item-checked icn"></i>&nbsp;${val}</label>`;
+          })
 
-   }
-   fetchMonthly()
-   
-  
+          let disableArray = []
+          for (let i = 0; i < data.length; i++) {
+            disableArray.push(data[i].disable_features)
+          }
+          const diableList = disableArray.filter((ele, index) => {
+            return disableArray.indexOf(ele) === index;
+          });
+          console.log(diableList);
+          diableList.forEach((val) => {
+            document.getElementById('list-standard').innerHTML += ` <label class="list-container"><i class="fa-solid fa-xmark item-notchecked icn"></i>&nbsp;${val}</label>`;
+          })
+          standard.innerHTML = '$' + data[data.length - 1].total_amt + '/mon'
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+
+      //fetch premium data
+      fetch('http://localhost/Pricing_plan/api/readpremium.php')
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data)
+          let enableArray = []
+          for (let i = 0; i < data.length; i++) {
+            enableArray.push(data[i].enable_features)
+
+          }
+          const enableList = enableArray.filter((ele, index) => {
+            return enableArray.indexOf(ele) === index;
+          });
+          console.log(enableList);
+
+          enableList.forEach((val) => {
+            document.getElementById('list-premium').innerHTML += ` <label class="list-container" id="bandwidth"><i class="fa-solid fa-check item-checked icn"></i>&nbsp;${val}</label>`;
+          })
+
+          let disableArray = []
+          for (let i = 0; i < data.length; i++) {
+            disableArray.push(data[i].disable_features)
+          }
+          const diableList = disableArray.filter((ele, index) => {
+            return disableArray.indexOf(ele) === index;
+          });
+          console.log(diableList);
+          diableList.forEach((val) => {
+            document.getElementById('list-premium').innerHTML += ` <label class="list-container"><i class="fa-solid fa-xmark item-notchecked icn"></i>&nbsp;${val}</label>`;
+          })
+          premium.innerHTML = '$' + data[data.length - 1].total_amt + '/mon'
+
+        })
+      //fetch special data
+      fetch('http://localhost/Pricing_plan/api/readspecial.php')
+        .then(response => response.json())
+        .then(data => {
+          // console.log(data)
+          let enableArray = []
+          for (let i = 0; i < data.length; i++) {
+            enableArray.push(data[i].enable_features)
+
+          }
+          const enableList = enableArray.filter((ele, index) => {
+            return enableArray.indexOf(ele) === index;
+          });
+          console.log(enableList);
+
+          enableList.forEach((val) => {
+            document.getElementById('list-special').innerHTML += ` <label class="list-container" id="bandwidth"><i class="fa-solid fa-check item-checked icn"></i>&nbsp;${val}</label>`;
+          })
+
+          let disableArray = []
+          for (let i = 0; i < data.length; i++) {
+            disableArray.push(data[i].disable_features)
+          }
+          const diableList = disableArray.filter((ele, index) => {
+            return disableArray.indexOf(ele) === index;
+          });
+          console.log(diableList);
+
+
+          if (diableList.length > 1) {
+            diableList.forEach((val) => {
+              document.getElementById('list-special').innerHTML += ` <label class="list-container"><i class="fa-solid fa-xmark item-notchecked icn"></i>&nbsp;${val}</label>`;
+            })
+          }
+
+
+
+          special.innerHTML = '$' + data[data.length - 1].total_amt + '/mon'
+        })
+
+    }
+    fetchMonthly()
+
+
     monthly.onclick = () => {
       fetch('http://localhost/Pricing_plan/api/readbasic.php')
-      .then(response => response.json())
-      .then(data => {
-        basic.innerHTML = '$' + data[data.length - 1].total_amt + '/mon'
-      })
+        .then(response => response.json())
+        .then(data => {
+          basic.innerHTML = '$' + data[data.length - 1].total_amt + '/mon'
+        })
 
       fetch('http://localhost/Pricing_plan/api/readdatastandard.php')
-      .then(response => response.json())
-      .then(data => {
-        standard.innerHTML = '$' + data[data.length - 1].total_amt + '/mon'
-      })
+        .then(response => response.json())
+        .then(data => {
+          standard.innerHTML = '$' + data[data.length - 1].total_amt + '/mon'
+        })
       fetch('http://localhost/Pricing_plan/api/readpremium.php')
-      .then(response => response.json())
-      .then(data => {
-        premium.innerHTML = '$' + data[data.length - 1].total_amt + '/mon'
-      })
+        .then(response => response.json())
+        .then(data => {
+          premium.innerHTML = '$' + data[data.length - 1].total_amt + '/mon'
+        })
       fetch('http://localhost/Pricing_plan/api/readspecial.php')
-      .then(response => response.json())
-      .then(data => { 
-        special.innerHTML = '$' + data[data.length - 1].total_amt + '/mon'
-      })
+        .then(response => response.json())
+        .then(data => {
+          special.innerHTML = '$' + data[data.length - 1].total_amt + '/mon'
+        })
       monthly.style.backgroundColor = '#317bb8';
       monthly.style.color = 'white'
       yearly.style.backgroundColor = 'white';

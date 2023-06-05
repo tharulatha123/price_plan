@@ -2,6 +2,69 @@
 
 include('./api/database/config.php');
 
+$id = $_GET['editid'];
+
+if (isset($_POST['submit'])) {
+    $month_year = $_POST['month_year'];
+    $plan_type = $_POST['plan_type'];
+    $price = $_POST['price'];
+    $discount = $_POST['discount'];
+    $total_amt = $_POST['total_amt'];
+
+
+    $sql = "UPDATE `price_plan` SET month_year='$month_year',plan_type= '$plan_type',price='$price',
+    discount='$discount',total_amt='$total_amt' WHERE id=$id";
+
+    $result = mysqli_query($con, $sql);
+
+    if ($result) {
+        // echo "Data inserted";
+        header('location:pricing_data.php');
+    }
+
+ 
+    //updating enable data
+    $sql_enable = "SELECT `enabled_id` from `enabled` WHERE price_id=$id";
+    $result_enable = mysqli_query($con, $sql_enable);
+   $enabled_arr=[];
+    if ($result_enable) {
+        while ($row = mysqli_fetch_assoc($result_enable)) {
+            array_push($enabled_arr,$row['enabled_id']);
+        }
+    }
+  print_r($enabled_arr);
+    $stmt_related = $con->prepare("UPDATE `enabled` SET enable_features = ? where enabled_id = ?");
+    $dataArray = $_POST['enable_features'];
+    $itr=0;
+    if (!empty($dataArray)) {
+        foreach ($dataArray as $enable_features) {
+            $stmt_related->bind_param("si", $enable_features, $enabled_arr[$itr++]);
+            $stmt_related->execute();
+        }
+    }
+
+print_r( $enabled_arr);
+
+    //updating diable data
+    $sql_query = "SELECT `disabled_id` FROM `diabled` WHERE price_id=$id ";
+    $result_query = mysqli_query($con,$sql_query);
+    $disabled_arr = [];
+    if($result){
+        while($row = mysqli_fetch_assoc($result_query)){
+            array_push($disabled_arr,$row['disabled_id']);
+        }
+    }
+    $diable_related = $con->prepare("UPDATE `diabled` SET disable_features = ? where disabled_id = ?");
+    $arrayData = $_POST['disable_features'];
+    $itr = 0;
+    if (!empty($arrayData)) {
+        foreach ($arrayData as $disable_features) {
+            $diable_related->bind_param("si", $disable_features, $disabled_arr[$itr++]);
+            $diable_related->execute();
+        }
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -361,6 +424,8 @@ include('./api/database/config.php');
                                         $total_amt = $row['total_amt'];
 
                                 ?>
+
+
                                         <div class="month-year">
                                             <?php
                                             if ($month_year == 'month') {
@@ -396,22 +461,22 @@ include('./api/database/config.php');
                                             <select id="inputState" name="plan_type" class="form-select">
                                                 <?php
                                                 if ($plan_type == 'basic') {
-                                                    echo '<option selected=' . $plan_type . '>Basic</option>
+                                                    echo '<option value="basic" selected=' . $plan_type . '>Basic</option>
                                             <option value="standard" disabled>Standard</option>
                                             <option value="premium" disabled>Premium</option>
                                             <option value="special" disabled>Special</option>';
                                                 } else if ($plan_type == 'standard') {
-                                                    echo '<option selected=' . $plan_type . '>Standard</option>
+                                                    echo '<option value="standard" selected=' . $plan_type . '>Standard</option>
                                             <option value="basic" disabled>Basic</option>
                                             <option value="premium" disabled>Premium</option>
                                             <option value="special" disabled>Special</option>';
                                                 } else if ($plan_type == 'premium') {
-                                                    echo '<option selected=' . $plan_type . '>Premium</option>
+                                                    echo '<option value="premium" selected=' . $plan_type . '>Premium</option>
                                             <option value="basic" disabled>Basic</option>
                                             <option value="standard" disabled>Standard</option>
                                             <option value="special" disabled>Special</option>';
                                                 } else if ($plan_type == 'special') {
-                                                    echo '<option selected=' . $plan_type . '>Special</option>
+                                                    echo '<option  value="special" selected=' . $plan_type . '>Special</option>
                                             <option value="basic" disabled>Basic</option>
                                             <option value="standard" disabled>Standard</option>
                                             <option value="premium" disabled>Premium</option>';
@@ -442,7 +507,7 @@ include('./api/database/config.php');
                                 ?>
                                 <div class="row my-3" id="row1">
                                     <div class="col-md-12" id="inputbox1">
-                                        <label for="enable" class="form-label">Enabled Features</label> <button type="button" class="btn btn-success add-features-enable" onclick="enableInput()"><i class="ri-add-box-line"></i></button>
+                                        <label for="enable" class="form-label">Enabled Features</label> 
                                         <?php
                                         $id = $_GET['editid'];
 
@@ -466,7 +531,7 @@ include('./api/database/config.php');
                                 </div>
                                 <div class="row my-3" id="row2">
                                     <div class="col-md-12" id="inputbox2">
-                                        <label for="diable" class="form-label">Disable Features</label> <button type="button" class="btn btn-success add-features-disables" onclick="diableInput()"><i class="ri-add-box-line"></i></button>
+                                        <label for="diable" class="form-label">Disable Features</label> 
                                         <?php
                                         $id = $_GET['editid'];
 
@@ -478,7 +543,7 @@ include('./api/database/config.php');
                                             while ($row = mysqli_fetch_array($result)) {
 
                                         ?>
-                                            <input type="text" name="disable_features[]" value="<?php echo $row['disable_features']?>" class="form-control space-btwn diableData" id="diable">
+                                                <input type="text" name="disable_features[]" value="<?php echo $row['disable_features'] ?>" class="form-control space-btwn diableData" id="diable">
 
                                         <?php
 
@@ -535,205 +600,6 @@ include('./api/database/config.php');
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
-
-    <!-- <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script> -->
-
-    <!-- <script>
-    ClassicEditor
-        .create( document.querySelector( '#features' ) )
-        .catch( error => {
-            console.error( error );
-        } );
-</script> -->
-
-    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/super-build/ckeditor.js"></script>
-
-
-    <!-- CKEDITOR script -->
-    <script>
-        CKEDITOR.ClassicEditor.create(document.getElementById("features"), {
-            // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
-            toolbar: {
-                items: [
-                    'exportPDF', 'exportWord', '|',
-                    'findAndReplace', 'selectAll', '|',
-                    'heading', '|',
-                    'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
-                    'bulletedList', 'numberedList', 'todoList', '|',
-                    'outdent', 'indent', '|',
-                    'undo', 'redo',
-                    '-',
-                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
-                    'alignment', '|',
-                    'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
-                    'specialCharacters', 'horizontalLine', 'pageBreak', '|',
-                    'textPartLanguage', '|',
-                    'sourceEditing'
-                ],
-                shouldNotGroupWhenFull: true
-            },
-            // Changing the language of the interface requires loading the language file using the <script> tag.
-            // language: 'es',
-            list: {
-                properties: {
-                    styles: true,
-                    startIndex: true,
-                    reversed: true
-                }
-            },
-            // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
-            heading: {
-                options: [{
-                        model: 'paragraph',
-                        title: 'Paragraph',
-                        class: 'ck-heading_paragraph'
-                    },
-                    {
-                        model: 'heading1',
-                        view: 'h1',
-                        title: 'Heading 1',
-                        class: 'ck-heading_heading1'
-                    },
-                    {
-                        model: 'heading2',
-                        view: 'h2',
-                        title: 'Heading 2',
-                        class: 'ck-heading_heading2'
-                    },
-                    {
-                        model: 'heading3',
-                        view: 'h3',
-                        title: 'Heading 3',
-                        class: 'ck-heading_heading3'
-                    },
-                    {
-                        model: 'heading4',
-                        view: 'h4',
-                        title: 'Heading 4',
-                        class: 'ck-heading_heading4'
-                    },
-                    {
-                        model: 'heading5',
-                        view: 'h5',
-                        title: 'Heading 5',
-                        class: 'ck-heading_heading5'
-                    },
-                    {
-                        model: 'heading6',
-                        view: 'h6',
-                        title: 'Heading 6',
-                        class: 'ck-heading_heading6'
-                    },
-                    {
-                        model: 'label',
-                        view: 'label',
-                        title: 'label',
-                        class: 'ck-label'
-                    }
-                ]
-            },
-            // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
-            placeholder: '',
-            // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
-            fontFamily: {
-                options: [
-                    'default',
-                    'Arial, Helvetica, sans-serif',
-                    'Courier New, Courier, monospace',
-                    'Georgia, serif',
-                    'Lucida Sans Unicode, Lucida Grande, sans-serif',
-                    'Tahoma, Geneva, sans-serif',
-                    'Times New Roman, Times, serif',
-                    'Trebuchet MS, Helvetica, sans-serif',
-                    'Verdana, Geneva, sans-serif'
-                ],
-                supportAllValues: true
-            },
-            // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
-            fontSize: {
-                options: [10, 12, 14, 'default', 18, 20, 22],
-                supportAllValues: true
-            },
-            // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
-            // https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
-            htmlSupport: {
-                allow: [{
-                    name: /.*/,
-                    attributes: true,
-                    classes: true,
-                    styles: true
-                }]
-            },
-            // Be careful with enabling previews
-            // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
-            htmlEmbed: {
-                showPreviews: true
-            },
-            // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
-            link: {
-                decorators: {
-                    addTargetToExternalLinks: true,
-                    defaultProtocol: 'https://',
-                    toggleDownloadable: {
-                        mode: 'manual',
-                        label: 'Downloadable',
-                        attributes: {
-                            download: 'file'
-                        }
-                    }
-                }
-            },
-            // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
-            mention: {
-                feeds: [{
-                    marker: '@',
-                    feed: [
-                        '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
-                        '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
-                        '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
-                        '@sugar', '@sweet', '@topping', '@wafer'
-                    ],
-                    minimumCharacters: 1
-                }]
-            },
-            // The "super-build" contains more premium features that require additional configuration, disable them below.
-            // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
-            removePlugins: [
-                // These two are commercial, but you can try them out without registering to a trial.
-                // 'ExportPdf',
-                // 'ExportWord',
-                'CKBox',
-                'CKFinder',
-                'EasyImage',
-                // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
-                // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
-                // Storing images as Base64 is usually a very bad idea.
-                // Replace it on production website with other solutions:
-                // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
-                // 'Base64UploadAdapter',
-                'RealTimeCollaborativeComments',
-                'RealTimeCollaborativeTrackChanges',
-                'RealTimeCollaborativeRevisionHistory',
-                'PresenceList',
-                'Comments',
-                'TrackChanges',
-                'TrackChangesData',
-                'RevisionHistory',
-                'Pagination',
-                'WProofreader',
-                // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
-                // from a local file system (file://) - load this site via HTTP server if you enable MathType.
-                'MathType',
-                // The following features are part of the Productivity Pack and require additional license.
-                'SlashCommand',
-                'Template',
-                'DocumentOutline',
-                'FormatPainter',
-                'TableOfContents'
-            ]
-        });
-    </script>
-    </script>
 
 
     <script src="./js/script.js"></script>

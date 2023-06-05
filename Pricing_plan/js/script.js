@@ -1,24 +1,24 @@
 let prices = document.getElementById("prices");
-console.log(prices);
+// console.log(prices);
 
 let discounts = document.getElementById("discounts");
-console.log(discounts);
+// console.log(discounts);
 
 let total = document.getElementById("total");
-console.log(total);
+// console.log(total);
 
 let diable = document.getElementById("diable");
-console.log(diable);
+// console.log(diable);
 
 const calculateTotal = () => {
   let pricevalue = Number(prices.value);
-  console.log(pricevalue);
+  // console.log(pricevalue);
 
   let discountvalue = Number(discounts.value) / 100;
 
   let totalValue = pricevalue * discountvalue;
   let totalAmount = pricevalue - totalValue;
-  console.log(totalAmount);
+  // console.log(totalAmount);
   total.value = totalAmount;
 };
 
@@ -45,4 +45,5 @@ function diableInput() {
     (container2.children.length + 1) +
     '">';
   container2.appendChild(inputbox2);
+
 }

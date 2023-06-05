@@ -32,9 +32,8 @@ while ($row = mysqli_fetch_assoc($result_data)) {
 //inserting enable data
 $stmt_related = $con->prepare("INSERT INTO `enabled` (enable_features,price_id) VALUES  (?, ?)");
 $dataArray = $_POST['enable_features'];
-print_r($dataArray);
-foreach ($dataArray as $enable_features) {
-    $stmt_related->bind_param("si", $enable_features, $id);
+foreach ($dataArray as $enabled_arr) {
+    $stmt_related->bind_param("si", $enabled_arr, $id);
     $stmt_related->execute();
   
 }
@@ -106,7 +105,7 @@ foreach ($arrayData as $disable_features) {
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
-
+        
         <div class="search-bar">
             <form class="search-form d-flex align-items-center" method="POST" action="#">
                 <input type="text" name="query" placeholder="Search" title="Enter search keyword">
