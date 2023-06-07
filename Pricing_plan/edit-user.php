@@ -1,6 +1,6 @@
 <?php
 
-include "connection.php";
+include ("./api/database/config.php");
 
 $id = $_GET['editid'];
 
@@ -30,7 +30,7 @@ if (isset($_POST['update'])) {
         // echo " update successfully";
            header('location:user.php');
     } else {
-        die(mysqli_query($con));
+        die(mysqli_query($con,$sql));
     }
 }
 

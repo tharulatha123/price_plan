@@ -1,3 +1,8 @@
+<?php 
+include('./api/database/config.php');
+@session_start()
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,15 +22,23 @@
     <header>
       <ul>
         <div class="header-part">
-          <a href="price.php">
+        <a href="price.php">
             <li>Home</li>
           </a>
           <i class="fa-regular fa-bell bell-icon"></i>
           <li>Orders</li>
-          <a href="profile.html">
-            <li>Profile</li>
+         <?php 
+            if(!isset($_SESSION['email'])){
+              echo '<a href="sign.php">
+              <li>Profile</li>';
+            }else{
+              echo '<a href="view-profile.php">
+              <li>Profile</li>';
+            }
+
+         ?>
           </a>
-          <a href="sign.php">
+          <a href="logout.php">
             <li>Logout</li>
           </a>
         </div>
@@ -57,7 +70,7 @@
       <div class="lists" id="lists-basics">
       </div>
       <div class="buy-nw">
-        <a href="paymentMonthly.html" id="buy_btn1"><button class="buy-button">Buy Now</button></a>
+        <a href="paymentMonthly.php" id="buy_btn1"><button class="buy-button">Buy Now</button></a>
       </div>
     </div>
     <div class="card standard">
@@ -67,7 +80,7 @@
 
       </div>
       <div class="buy-nw">
-        <a href="paymentMonthly.html" id="buy_btn2"><button class="buy-button">Buy Now</button></a>
+        <a href="paymentMonthly.php" id="buy_btn2"><button class="buy-button">Buy Now</button></a>
       </div>
     </div>
     <div class="card premium">
@@ -76,7 +89,7 @@
       <div class="lists" id="list-premium">
       </div>
       <div class="buy-nw">
-        <a href="paymentMonthly.html" id="buy_btn3"><button class="buy-button">Buy Now</button></a>
+        <a href="paymentMonthly.php" id="buy_btn3"><button class="buy-button">Buy Now</button></a>
       </div>
     </div>
     <div class="card special">
@@ -85,7 +98,7 @@
       <div class="lists" id="list-special">
       </div>
       <div class="buy-nw">
-        <a href="paymentMonthly.html" id="buy_btn4"><button class="buy-button">Buy Now</button></a>
+        <a href="paymentMonthly.php" id="buy_btn4"><button class="buy-button">Buy Now</button></a>
       </div>
     </div>
   </div>
@@ -318,10 +331,10 @@
       yearly.style.color = 'white'
       monthly.style.backgroundColor = 'white';
       monthly.style.color = 'black';
-      document.getElementById('buy_btn1').href = "paymentYearly.html"
-      document.getElementById('buy_btn2').href = "paymentYearly.html"
-      document.getElementById('buy_btn3').href = "paymentYearly.html"
-      document.getElementById('buy_btn4').href = "paymentYearly.html"
+      document.getElementById('buy_btn1').href = "paymentYearly.php"
+      document.getElementById('buy_btn2').href = "paymentYearly.php"
+      document.getElementById('buy_btn3').href = "paymentYearly.php"
+      document.getElementById('buy_btn4').href = "paymentYearly.php"
     }
   </script>
 </body>

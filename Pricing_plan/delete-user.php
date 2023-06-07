@@ -1,5 +1,5 @@
 <?php 
-include "connection.php";
+include ("./api/database/config.php");
 
 if(isset($_GET['deleteid'])){
     $id = $_GET['deleteid'];

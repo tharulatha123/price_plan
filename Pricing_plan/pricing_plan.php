@@ -1,7 +1,7 @@
 <?php
 
 include('./api/database/config.php');
-
+include('function.php');
 
 if (isset($_POST['submit'])) {
     $month_year = $_POST['month_year'];
@@ -24,32 +24,30 @@ if (isset($_POST['submit'])) {
 
 
 
-$sql_fetch = "SELECT * FROM `price_plan`";
-$result_data = mysqli_query($con, $sql_fetch);
-while ($row = mysqli_fetch_assoc($result_data)) {
-    $id = $row['id'];
-}
-//inserting enable data
-$stmt_related = $con->prepare("INSERT INTO `enabled` (enable_features,price_id) VALUES  (?, ?)");
-$dataArray = $_POST['enable_features'];
-foreach ($dataArray as $enabled_arr) {
-    $stmt_related->bind_param("si", $enabled_arr, $id);
-    $stmt_related->execute();
-  
-}
+    $sql_fetch = "SELECT * FROM `price_plan`";
+    $result_data = mysqli_query($con, $sql_fetch);
+    while ($row = mysqli_fetch_assoc($result_data)) {
+        $id = $row['id'];
+    }
+    //inserting enable data
+    $stmt_related = $con->prepare("INSERT INTO `enabled` (enable_features,price_id) VALUES  (?, ?)");
+    $dataArray = $_POST['enable_features'];
+    foreach ($dataArray as $enabled_arr) {
+        $stmt_related->bind_param("si", $enabled_arr, $id);
+        $stmt_related->execute();
+    }
 
 
-//imserting diable data
-$diable_related = $con->prepare("INSERT INTO `diabled` (disable_features,price_id) VALUES  (?, ?)");
-$arrayData = $_POST['disable_features'];
-foreach ($arrayData as $disable_features) {
-    
-   if(!empty($diable_related)){
-    $diable_related->bind_param("si", $disable_features, $id);
-    $diable_related->execute();
-   }
-}
+    //imserting diable data
+    $diable_related = $con->prepare("INSERT INTO `diabled` (disable_features,price_id) VALUES  (?, ?)");
+    $arrayData = $_POST['disable_features'];
+    foreach ($arrayData as $disable_features) {
 
+        if (!$diable_related == '') {
+            $diable_related->bind_param("si", $disable_features, $id);
+            $diable_related->execute();
+        }
+    }
 }
 
 
@@ -105,7 +103,7 @@ foreach ($arrayData as $disable_features) {
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
-        
+
         <div class="search-bar">
             <form class="search-form d-flex align-items-center" method="POST" action="#">
                 <input type="text" name="query" placeholder="Search" title="Enter search keyword">
@@ -411,14 +409,19 @@ foreach ($arrayData as $disable_features) {
                                     </label>
                                 </div>
                                 <div class="input-select">
-                                    <label for="inputState" class="form-label"></label>
-                                    <select id="inputState" name="plan_type" class="form-select">
+                                   
+                                    <!-- <select id="inputState" name="plan_type" class="form-select">
                                         <option selected="">Select Plan</option>
                                         <option value="basic">Basic</option>
                                         <option value="standard">Standard</option>
                                         <option value="premium">Premium</option>
                                         <option value="special">Special</option>
-                                    </select>
+                                    </select> -->
+                                    <?php 
+                                    getSelection();
+                                    ?>
+                                    <label for="inputState" class="form-label"></label>
+                                    
                                 </div>
 
                                 <div class="row">

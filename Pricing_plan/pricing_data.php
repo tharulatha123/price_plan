@@ -329,7 +329,7 @@ include('./api/database/config.php');
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="dashborad.php">Home</a></li>
-                    <li class="breadcrumb-item"><a href="pricing_plan.php">Pricing Plan</a></li>
+                    <li class="breadcrumb-item"><a href="pricing_data.php">Pricing Plan</a></li>
                     <li class="breadcrumb-item active">Pricing Data</li>
                 </ol>
             </nav>

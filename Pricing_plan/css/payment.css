@@ -556,3 +556,10 @@ input:focus {
     font-weight: bold;
 
 }
+.edit-profile:hover{
+    color:rgb(174, 40, 179);;
+}
+input[type="file"]{
+    color: #242121;
+  }
+ 

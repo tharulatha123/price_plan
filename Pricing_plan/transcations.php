@@ -497,7 +497,7 @@ include('./api/database/config.php');
                     <td>2023-11-2 12:15PM</td>
                     <td>5756</td>
                     <td>909768756</td>
-                    <td>strope</td>
+                    <td>stripe</td>
                     <td>200</td>
                     <td><button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">

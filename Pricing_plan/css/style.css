@@ -42,7 +42,25 @@ html,body{
   margin-top: 20px;
   position: relative;
 }
+input[type="file"]{
+  color: #8d7f7f; 
+}
+input[type=file]::-webkit-file-upload-button {
+  visibility: hidden;
+  /* border-radius: 10px;
+  border: none; */
+}
 .wrapper form .field input{
+  height: 100%;
+  width: 100%;
+  outline: none;
+  font-size: 17px;
+  padding-left: 20px;
+  border: 1px solid lightgrey;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+.wrapper form .field .form-select{
   height: 100%;
   width: 100%;
   outline: none;

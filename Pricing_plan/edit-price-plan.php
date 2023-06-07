@@ -57,7 +57,7 @@ print_r( $enabled_arr);
     $diable_related = $con->prepare("UPDATE `diabled` SET disable_features = ? where disabled_id = ?");
     $arrayData = $_POST['disable_features'];
     $itr = 0;
-    if (!empty($arrayData)) {
+    if (!$arrayData == '') {
         foreach ($arrayData as $disable_features) {
             $diable_related->bind_param("si", $disable_features, $disabled_arr[$itr++]);
             $diable_related->execute();
@@ -392,7 +392,7 @@ print_r( $enabled_arr);
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="dashborad.php">Home</a></li>
-                    <li class="breadcrumb-item"><a href="pricing_plan.php">Pricing Plan</a></li>
+                    <li class="breadcrumb-item"><a href="pricing_data.php">Pricing Plan</a></li>
                     <li class="breadcrumb-item active">Add Pricing</li>
                 </ol>
             </nav>
