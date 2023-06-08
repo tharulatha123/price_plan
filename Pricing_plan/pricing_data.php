@@ -1,7 +1,7 @@
 <?php
 
 include('./api/database/config.php');
-
+include('function.php');
 ?>
 
 <!DOCTYPE html>
@@ -44,9 +44,9 @@ include('./api/database/config.php');
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="dashborad.php" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">NiceAdmin</span>
+                <span class="d-none d-lg-block">POP</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -344,7 +344,9 @@ include('./api/database/config.php');
                             <div class="head-add d-flex justify-content-between">
                                 <h5 class="card-title">Pricing Data</h5>
                                 <div>
-                                    <a href="pricing_plan.php"> <button class="btn btn-primary mt-4"><i class="ri-add-fill fw-bolder"></i>Add Price</button></a>
+
+                                    <a id="rooting"><button type="button" id="selection" class="btn btn-primary mt-4"><i class="ri-add-fill fw-bolder"></i>Add Price</button></a>
+
                                 </div>
                             </div>
 
@@ -365,7 +367,7 @@ include('./api/database/config.php');
                                 <tbody>
                                     <?php
 
-                                    $sql = "SELECT * FROM `price_plan`";
+                                    $sql = "SELECT * FROM `price_plan`  ORDER BY id DESC";
 
                                     $result = mysqli_query($con, $sql);
 
@@ -377,17 +379,17 @@ include('./api/database/config.php');
                                             $price = $row['price'];
                                             $discount = $row['discount'];
                                             $total_amt = $row['total_amt'];
-                                           
+
                                             echo '<tr>
-                                                     <th scope="row">'.$id.'</th>
-                                                     <td>'.$month_year.'</td>
-                                                     <td>'.$plan_type.'</td>
-                                                     <td>'.$price.'</td>
-                                                     <td>'.$discount.'</td>
-                                                     <td>'.$total_amt.'</td>
-                                                     <td> <a href="edit-price-plan.php?editid='.$id.'"><button class="btn btn-primary"><i
+                                                     <th scope="row">' . $id . '</th>
+                                                     <td>' . $month_year . '</td>
+                                                     <td>' . $plan_type . '</td>
+                                                     <td>' . $price . '</td>
+                                                     <td>' . $discount . '</td>
+                                                     <td>' . $total_amt . '</td>
+                                                     <td> <a href="edit-price-plan.php?editid=' . $id . '"><button class="btn btn-primary"><i
                                                  class="ri-edit-2-fill"></i></button></a>
-                                                 <a href="delete-price-plan.php?deleteid='.$id.'"><button class="btn btn-danger"><i
+                                                 <a href="delete-price-plan.php?deleteid=' . $id . '"><button class="btn btn-danger"><i
                                                   class="ri-delete-bin-6-line"></i></button></a>
                                                    </td>
                                                 </tr>';
@@ -434,7 +436,7 @@ include('./api/database/config.php');
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
-
+     <script src="./js/script.js"></script>
 </body>
 
 </html>

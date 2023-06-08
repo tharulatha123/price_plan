@@ -47,7 +47,7 @@
                         <li>Home</li>
                     </a>
                     <i class="fa-regular fa-bell bell-icon"></i>
-                    <li>Orders</li>
+                    <a href="order.php"><li>Orders</li></a>
                     <a href="view-profile.php"><li>Profile</li></a>
                     <a href="logout.php">
                         <li>Logout</li>

@@ -22,8 +22,7 @@ const calculateTotal = () => {
   total.value = totalAmount;
 };
 
-
- function enableInput() {
+function enableInput() {
   var container1 = document.getElementById("row1");
   var inputbox1 = document.createElement("div");
   inputbox1.classList.add("inputbox1");
@@ -34,8 +33,6 @@ const calculateTotal = () => {
   container1.appendChild(inputbox1);
 }
 
-
-
 function diableInput() {
   var container2 = document.getElementById("row2");
   var inputbox2 = document.createElement("div");
@@ -45,5 +42,29 @@ function diableInput() {
     (container2.children.length + 1) +
     '">';
   container2.appendChild(inputbox2);
-
 }
+
+let selection = document.getElementById("selection");
+let rooting = document.getElementById("rooting");
+
+let count = 0;
+fetch("http://localhost/Pricing_plan/api/select-plans.php")
+  .then((response) => response.json())
+  .then((data) => {
+    let arr = [];
+    for (let i = 0; i < data.length; i++) {
+      arr.push(data[i].plan_type);
+    }
+    arr.forEach((ele) => {
+      count++;
+    });
+  });
+
+selection.onclick = () => {
+  if (count >= 8) {
+    alert("You have entred all plans ");
+    console.log("You have entred all plans ");
+  } else {
+    rooting.href = "pricing_plan.php";
+  }
+};

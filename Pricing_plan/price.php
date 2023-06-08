@@ -1,6 +1,9 @@
 <?php 
 include('./api/database/config.php');
-@session_start()
+@session_start();
+if(!isset($_SESSION['email'])){
+  header("location:sign.php");
+  }
 ?>
 
 <!DOCTYPE html>
@@ -12,6 +15,7 @@ include('./api/database/config.php');
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="./css/styling.css">
+ 
   <link rel="icon" href="./images/favicon.png">
   <title>plans</title>
 </head>
@@ -26,7 +30,7 @@ include('./api/database/config.php');
             <li>Home</li>
           </a>
           <i class="fa-regular fa-bell bell-icon"></i>
-          <li>Orders</li>
+          <a href="order.php"><li>Orders</li></a>
          <?php 
             if(!isset($_SESSION['email'])){
               echo '<a href="sign.php">
@@ -120,6 +124,7 @@ include('./api/database/config.php');
 
 
     let fetchMonthly = () => {
+      localStorage.clear();
       //fetch basic price data
       fetch('http://localhost/Pricing_plan/api/readbasic.php')
         .then(response => response.json())

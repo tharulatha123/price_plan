@@ -11,6 +11,7 @@ header {
   background-color: white;
   height: 50px;
   padding-top: 3px;
+  color: #000;
 }
 a{
   text-decoration: none;
@@ -28,6 +29,8 @@ a{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+
+
 .bell-icon {
   font-size: 20px;
 }
@@ -44,7 +47,12 @@ a li:hover {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
 }
-
+li{
+  color: #000;
+}
+.a{
+  text-decoration: none;
+}
 .switch-block {
   display: flex;
   justify-content: center;
@@ -259,7 +267,8 @@ li:hover {
   border-top: 1px solid #cddfff;
   background-color: white;
   font-weight: 500;
-  font-family: "Open Sans", sans-serif
+  font-family: "Open Sans", sans-serif;
+  width: 100%;
 }
 
 .footer .copyright {
@@ -296,4 +305,18 @@ body {
     box-sizing: 0 20px 35px rgba(0, 0, 0, 0);
   }
 
+}
+
+
+/* order table */
+
+.order-table{
+ margin: 20px 50px 20px 50px;
+ background-color: white;
+ padding: 30px;
+ font-family: "Open Sans", sans-serif;
+}
+.display{
+  padding: 10px;
+  
 }

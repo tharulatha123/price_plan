@@ -1,7 +1,6 @@
 <?php
 
 include('./api/database/config.php');
-include('function.php');
 
 if (isset($_POST['submit'])) {
     $month_year = $_POST['month_year'];
@@ -43,7 +42,7 @@ if (isset($_POST['submit'])) {
     $arrayData = $_POST['disable_features'];
     foreach ($arrayData as $disable_features) {
 
-        if (!$diable_related == '') {
+        if (!isset($disable_features)=='') {
             $diable_related->bind_param("si", $disable_features, $id);
             $diable_related->execute();
         }
@@ -99,7 +98,7 @@ if (isset($_POST['submit'])) {
         <div class="d-flex align-items-center justify-content-between">
             <a href="dashborad.php" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">NiceAdmin</span>
+                <span class="d-none d-lg-block">POP</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -410,16 +409,14 @@ if (isset($_POST['submit'])) {
                                 </div>
                                 <div class="input-select">
                                    
-                                    <!-- <select id="inputState" name="plan_type" class="form-select">
+                                    <select id="inputState" name="plan_type" class="form-select">
                                         <option selected="">Select Plan</option>
                                         <option value="basic">Basic</option>
                                         <option value="standard">Standard</option>
                                         <option value="premium">Premium</option>
                                         <option value="special">Special</option>
-                                    </select> -->
-                                    <?php 
-                                    getSelection();
-                                    ?>
+                                    </select>
+                                    
                                     <label for="inputState" class="form-label"></label>
                                     
                                 </div>

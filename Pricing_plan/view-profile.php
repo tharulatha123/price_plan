@@ -1,6 +1,9 @@
 <?php
 include('./api/database/config.php');
-@session_start()
+@session_start();
+if (!isset($_SESSION['email'])) {
+    header("location:sign.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +28,9 @@ include('./api/database/config.php');
                         <li>Home</li>
                     </a>
                     <i class="fa-regular fa-bell bell-icon"></i>
-                    <li>Orders</li>
+                    <a href="order.php">
+                        <li>Orders</li>
+                    </a>
                     <?php
                     if (!isset($_SESSION['email'])) {
                         echo '<a href="sign.php">
@@ -125,11 +130,17 @@ include('./api/database/config.php');
                                         Profile</button>
                                 </li>
     
-                                  <li class='nav-item' role='presentation'>
-                                     <button class='nav-link edit-profile' data-bs-toggle='tab'
-                                        data-bs-target='#profile-change-password' aria-selected='false' tabindex='-1'
-                                     role='tab'>Change Password</button>
-                                 </li> 
+                                 <li class='nav-item' role='presentation'>
+                                   <button class='nav-link edit-profile' data-bs-toggle='tab'
+                                      data-bs-target='#profile-change-password' aria-selected='false' tabindex='-1'
+                                   role='tab'>Change Password</button>
+                               </li> 
+
+                               <li class='nav-item' role='presentation'>
+                               <button class='nav-link edit-profile' data-bs-toggle='tab'
+                                  data-bs-target='#profile-delete' aria-selected='false' tabindex='-1'
+                               role='tab'>Delete Account</button>
+                           </li> 
     
                             </ul>
                             <div class='tab-content pt-2'>
@@ -218,18 +229,68 @@ include('./api/database/config.php');
                 }
                 ?>
 
+                <?php
+                if (isset($_POST['update'])) {
 
+                    $cpassword = $_POST['cpassword'];
+                    $newpassword = $_POST['newpassword'];
+                    $hash_password = password_hash($newpassword, PASSWORD_DEFAULT);
+                    $renewpassword = $_POST['renewpassword'];
+
+                    if (empty($cpassword)) {
+                        echo "<script>alert('Password not be empty')</script>";
+                    } elseif (empty($newpassword)) {
+                        echo "<script>alert('New Password not be empty')</script>";
+                    } elseif (empty($renewpassword)) {
+                        echo "<script>alert('Re-enter New Password not be empty')</script>";
+                    } elseif ($newpassword != $renewpassword) {
+                        echo "<script>alert('New Passwords are not matching')</script>";
+                    } else {
+                        $email = $_SESSION['email'];
+                        $sql = "SELECT password FROM userlogin WHERE email='$email'";
+                        $result = mysqli_query($con, $sql);
+                        $row = mysqli_fetch_assoc($result);
+                        $NewCinpassword = password_verify($cpassword, $row['password']);
+                        if ($cpassword != $NewCinpassword) {
+                            echo "<script>alert('Password Not Matched')</script>";
+                        } else {
+                            $sql_update = "UPDATE userlogin SET password='$hash_password'";
+                            $result_update = mysqli_query($con, $sql_update);
+                            if ($result_update) {
+                                echo "<script>alert('Password Updated Successfully')</script>";
+                            } else {
+                                die();
+                            }
+                        }
+                    }
+                }
+                ?>
+
+                <?php
+                if (isset($_POST['delete'])) {
+                    $email = $_SESSION['email'];
+                    $sql_delete = "DELETE FROM `userlogin` WHERE email='$email'";
+                    $result_delete = mysqli_query($con, $sql_delete);
+                    if ($result_delete) {                      
+                       echo "<script>alert('User Account Deleted Successfully')</script>";
+                       @header('location:sign.php');
+                       echo "<script>window.open('sign.php','_self')</script>";
+                    }else{
+                  die();
+                    }
+                }
+                ?>
 
 
                 <div class="tab-pane fade pt-3" id="profile-change-password" role="tabpanel">
 
-                    <form method='post' enctype='multipart/form-data' autocomplete='off'>
+                    <form method='post' autocomplete="off">
 
                         <div class="row mb-3">
                             <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
                                 Password</label>
                             <div class="col-md-8 col-lg-9">
-                                <input name="password" type="password" class="form-control" id="currentPassword">
+                                <input name="cpassword" type="password" class="form-control" id="currentPassword">
                             </div>
                         </div>
 
@@ -250,11 +311,20 @@ include('./api/database/config.php');
                         </div>
 
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Change Password</button>
+                            <button type="submit" name='update' class="btn btn-primary">Change Password</button>
                         </div>
                     </form>
                 </div>
 
+
+                <div class="tab-pane fade pt-3" id="profile-delete" role="tabpanel">
+
+                    <form action="" method="post">
+                        <button type="submit" name="delete" class="btn btn-danger">Delete Account</button>
+                    </form>
+
+
+                </div>
             </div>
 
         </div>

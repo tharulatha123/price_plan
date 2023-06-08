@@ -57,7 +57,7 @@ print_r( $enabled_arr);
     $diable_related = $con->prepare("UPDATE `diabled` SET disable_features = ? where disabled_id = ?");
     $arrayData = $_POST['disable_features'];
     $itr = 0;
-    if (!$arrayData == '') {
+    if (!empty($arrayData)) {
         foreach ($arrayData as $disable_features) {
             $diable_related->bind_param("si", $disable_features, $disabled_arr[$itr++]);
             $diable_related->execute();
@@ -106,9 +106,9 @@ print_r( $enabled_arr);
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="dashborad.php" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">NiceAdmin</span>
+                <span class="d-none d-lg-block">POP</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->

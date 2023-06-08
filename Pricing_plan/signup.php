@@ -1,6 +1,6 @@
 <?php
 include('./api/database/config.php');
-include('./Functions/function.php');
+include('function.php');
 
 if (isset($_POST['signup'])) {
    $name = $_POST['name'];
